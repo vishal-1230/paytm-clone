@@ -76,18 +76,18 @@ const CameraSection = () => {
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [flash, setFlash] = React.useState<any>(Camera?.Constants?.FlashMode?.off)
 
-  useEffect(()=>{
-
-    async function askForPermission() {
-      const status = permission?.status
-      if (status === 'granted') {
-        console.log("Permission Granted")
-      } else {
-        console.log("Permission Not Granted")
-        await requestPermission()
-      }
+  async function askForPermission() {
+    const status = permission?.status
+    if (status === 'granted') {
+      console.log("Permission Granted")
+    } else {
+      console.log("Permission Not Granted")
+      await requestPermission()
     }
+  }
 
+  useEffect(()=>{
+    
     askForPermission()
 
   }, [])
