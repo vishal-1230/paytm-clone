@@ -3,5 +3,9 @@
   "compilerOptions": {
     "strict": true,
     "jsx": "react-native"
-  }
+  },
+  "include": [
+    "**/*",
+    "/home/tom/Mauj/paytm/assets/image-types.d.ts"
+  ]
 }
