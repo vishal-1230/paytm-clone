@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList, Image, Text, View } from 'react-native'
+import { FlatList, Image, Text, TouchableNativeFeedback, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 
 function Section(props: SectionProps) {
   return (
@@ -68,55 +68,59 @@ function Section(props: SectionProps) {
         rowGap: 20,
       }}>
         {props.items.map((item, index) => (
-          <View key={index} style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-start",
-            alignItems: "center",
-            gap: 8,
-            marginLeft: 10,
-            borderRadius: 12,
-            aspectRatio: 1,
-            width: 80
-          }}>
-            {
-              item.iconStyle === "highlighted" ? (
-                <View style={{
-                  // height: 30,
-                  // width: 30,
-                  backgroundColor: "#022A72",
-                  borderRadius: 15,
-                  padding: 5,
-                }}>
-                  <Image source={item.icon} style={{height: 40, width: 40, objectFit: "contain"}} />
-                </View>
-              ) : item.iconStyle === "special" ? (
-                <View style={{
-                  backgroundColor: "#FEF8E2",
-                  borderColor: "#EAD882",
-                  borderWidth: 1,
-                  borderRadius: 15,
-                  padding: 5,
-                  paddingTop: 4,
-                  paddingBottom: 7,
-                }}>
-                  <Image source={item.icon} style={{height: 40, width: 40, objectFit: "contain"}} />
-                </View>
-              ) : (
-                <View style={{
-                  borderColor: "#ececec",
-                  borderWidth: 1,
-                  borderRadius: 15,
-                  paddingBottom: 7,
-                  paddingTop: 4,
-                  paddingHorizontal: 5
-                }}>
-                  <Image source={item.icon} style={{height: 40, width: 40, objectFit: "contain"}} />
-                </View>
-              )
-            }
-            <Text style={{color: "black", fontWeight: "600", textAlign: "center", fontSize: 12}}>{item.title}</Text>
-          </View>
+          <TouchableWithoutFeedback style={{
+            borderRadius: 60,
+          }} key={index} onPress={item.onPress}>
+            <View key={index} style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              alignItems: "center",
+              gap: 8,
+              marginLeft: 10,
+              borderRadius: 12,
+              aspectRatio: 1,
+              width: 80
+            }}>
+              {
+                item.iconStyle === "highlighted" ? (
+                  <View style={{
+                    // height: 30,
+                    // width: 30,
+                    backgroundColor: "#022A72",
+                    borderRadius: 15,
+                    padding: 5,
+                  }}>
+                    <Image source={item.icon} style={{height: 40, width: 40, objectFit: "contain"}} />
+                  </View>
+                ) : item.iconStyle === "special" ? (
+                  <View style={{
+                    backgroundColor: "#FEF8E2",
+                    borderColor: "#EAD882",
+                    borderWidth: 1,
+                    borderRadius: 15,
+                    padding: 5,
+                    paddingTop: 4,
+                    paddingBottom: 7,
+                  }}>
+                    <Image source={item.icon} style={{height: 40, width: 40, objectFit: "contain"}} />
+                  </View>
+                ) : (
+                  <View style={{
+                    borderColor: "#ececec",
+                    borderWidth: 1,
+                    borderRadius: 15,
+                    paddingBottom: 7,
+                    paddingTop: 4,
+                    paddingHorizontal: 5
+                  }}>
+                    <Image source={item.icon} style={{height: 40, width: 40, objectFit: "contain"}} />
+                  </View>
+                )
+              }
+              <Text style={{color: "black", fontWeight: "600", textAlign: "center", fontSize: 12}}>{item.title}</Text>
+            </View>
+          </TouchableWithoutFeedback>
         ))}
         </View>
     </View>

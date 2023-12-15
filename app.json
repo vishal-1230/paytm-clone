@@ -25,6 +25,16 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Paytm to access your camera."
+        }
+      ],
+      "expo-router"
+    ],
+    "scheme": "your-app-scheme"
   }
 }

@@ -90,6 +90,8 @@ import offer4 from "../assets/offers/offer4.jpeg"
 import offer5 from "../assets/offers/offer5.jpeg"
 import offer6 from "../assets/offers/offer6.jpeg"
 import offer7 from "../assets/offers/offer7.jpeg"
+
+import { router } from "expo-router";
 const MainPlayground = () => {
     const width = Dimensions.get('window').width;
     const images = [offer1, offer2, offer3, offer4, offer5, offer6, offer7].reverse()
@@ -151,7 +153,9 @@ const MainPlayground = () => {
         </View>
 
                 <Section title="UPI Money Transfer" titleSubText="vishal.vishwajeet@paytm" items={[
-                    {title: "Scan & Pay", icon: scannpay2, iconStyle: "highlighted"},
+                    {title: "Scan & Pay", icon: scannpay2, iconStyle: "highlighted", onPress: ()=>{
+                        router.push("Scanner")
+                    }},
                     {title: "To Mobile or Contact", icon: tocontact, iconStyle: "highlighted"},
                     {title: "Link RuPay Card to UPI", icon: linkrupay, iconStyle: "highlighted"},
                     {title: "To Bank or Self A/c", icon: tobank, iconStyle: "highlighted"},

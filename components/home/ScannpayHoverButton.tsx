@@ -9,7 +9,7 @@ export const ScannpayHoverButton = () => {
             position: "absolute",
             // bottom: 135,
             // bottom: 250,
-            top: "72.5%",
+            top: "74.5%",
             height: 67,
             // width: 180,
             backgroundColor: "white",
