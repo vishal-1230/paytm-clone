@@ -46,14 +46,29 @@ function Pay() {
                 }} onChange={(e: any)=>{
                     setPrice(e.nativeEvent.text)
                     console.log("PRice updated", price)
-                }} />
+                }} value={
+                    // comma seperated price
+                    price ?
+                    // formatIndianPrice(price)
+                    price.toString()
+                    :
+                    undefined
+                } />
             </View>
                 <Text style={{
                     fontSize: 12,
                     color: "#949494",
                     // textAlign: "center",
                     // width: "100%",
-                }}>Rupees Twelve Only</Text>
+                }}>
+                    {/* Rupees Twelve Only */}
+                    {
+                        price ? 
+                            `Rupees ${price} Only`
+                        :
+                            null
+                        }
+                </Text>
         </View>
 
         <PayButton price={price} />
@@ -208,6 +223,25 @@ const PayButton = ({price}: {price: number | null}) => {
             </View>
         </View>
     )
+}
+
+// getting 12,24,110 from 1224110
+function formatIndianPrice(price: number) {
+    const priceString = price.toString()
+    const priceArray = priceString.split("")
+    if (priceArray.length <= 3) {
+        return priceString
+    } else {
+        const lastThree = priceArray.slice(priceArray.length-3, priceArray.length).join("")
+        let remaining = ""
+        for (let i = priceArray.length-4; i >= 0; i--) {
+            remaining = priceArray[i] + remaining
+            if ((priceArray.length-1-i)%2 === 0) {
+                remaining = "," + remaining
+            }
+        }
+        return `${remaining},${lastThree}`
+    }
 }
 
 export default Pay
