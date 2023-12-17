@@ -7,7 +7,7 @@ import paytmbank from "../assets/paytmbank.png"
 
 function Pay() {
 
-    const [price, setPrice] = useState(null)
+    const [price, setPrice] = useState<number | null>(null)
 
   return (
     <View style={{
