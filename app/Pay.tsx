@@ -1,9 +1,11 @@
 import { AntDesign } from '@expo/vector-icons'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, Text, TextInput, View } from 'react-native'
 import upiLogo from "../assets/upionly.png"
 import Button from '../components/common/Button'
 import paytmbank from "../assets/paytmbank.png"
+
+import { router, useLocalSearchParams } from 'expo-router'
 
 function Pay() {
 
@@ -43,6 +45,7 @@ function Pay() {
                     // width: "100%",
                 }} onChange={(e: any)=>{
                     setPrice(e.nativeEvent.text)
+                    console.log("PRice updated", price)
                 }} />
             </View>
                 <Text style={{
@@ -53,13 +56,32 @@ function Pay() {
                 }}>Rupees Twelve Only</Text>
         </View>
 
-        <PayButton />
+        <PayButton price={price} />
 
     </View>
   )
 }
 
 const TopBar = () => {
+
+    const params = useLocalSearchParams()
+
+    const [name, setName] = useState<string | null>(null)
+    const [upiid, setUpiid] = useState<string | null>(null)
+
+    useEffect(()=>{
+        if (params?.name && typeof params?.name === "string") {
+            setName(params.name)
+        } else {
+            setName(null)
+        }
+        if (params?.upiid && typeof params?.upiid === "string") {
+            setUpiid(params.upiid)
+        } else {
+            setUpiid(null)
+        }
+    }, [params])
+
     return (
         <View style={{
             display: "flex",
@@ -69,7 +91,9 @@ const TopBar = () => {
             width: "100%",
             paddingVertical: 22
         }}>
-            <AntDesign name="arrowleft" size={24} color="black" style={{
+            <AntDesign name="arrowleft" size={24} color="black" onPress={(e: any)=>{
+                router.back()
+            }} style={{
                 marginHorizontal: 10,
             }} />
             <Text style={{
@@ -82,16 +106,26 @@ const TopBar = () => {
                 color: "white",
                 aspectRatio: 1,
                 verticalAlign: "middle"
-            }}>SS</Text>
+            }}>
+                {/* SS */}
+                {
+                    name ? 
+                        name.split(" ").map((word: string) => word[0]).join("")
+                    :
+                        "PM"
+                    }
+            </Text>
             <View style={{
                 display: "flex",
                 flexDirection: "column",
                 gap: 1,
                 marginLeft: 7,
             }}>
-                <Text style={{fontWeight: "700", fontSize: 16}}>Siddharth Saha</Text>
+                <Text style={{fontWeight: "700", fontSize: 16}}>
+                    {name?name:"Paytm Merchant"}
+                </Text>
                 <Text style={{color: "#000", fontSize: 13}}>
-                    9354992488@upi
+                    {upiid?upiid:"8373958829@paytm"}
                 </Text>
             </View>
         </View>
@@ -127,13 +161,38 @@ const UPI = () => {
     )
 }
 
-const PayButton = () => {
+const PayButton = ({price}: {price: number | null}) => {
+
+    const params = useLocalSearchParams()
+
+    const [name, setName] = useState<string | null>(null)
+    const [upiid, setUpiid] = useState<string | null>(null)
+
+    useEffect(()=>{
+        if (params?.name && typeof params?.name === "string") {
+            setName(params.name)
+        } else {
+            setName(null)
+        }
+        if (params?.upiid && typeof params?.upiid === "string") {
+            setUpiid(params.upiid)
+        } else {
+            setUpiid(null)
+        }
+    }, [params])
+
     return (
         <View style={{
             borderTopColor: "#d0d0d0",
             borderTopWidth: 0.5,
         }}>
-            <Button title="Proceed Securely" onPress={()=>{}} />
+            <Button title="Proceed Securely" onPress={()=>{
+                router.push({pathname: "UPI", params:{
+                    name: name,
+                    upiid: upiid,
+                    price: price
+                }})
+            }} />
             <View style={{
                 flexDirection: "row",
                 alignItems: "center",

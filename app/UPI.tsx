@@ -1,9 +1,35 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FlatList, Image, Text, TouchableOpacity, View } from 'react-native'
 import upi from '../assets/upi.webp'
 import { Entypo, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { router, useLocalSearchParams } from 'expo-router'
 
 function UPI() {
+
+    const params = useLocalSearchParams()
+
+    const [name, setName] = useState<string | null>(null)
+    const [upiid, setUpiid] = useState<string | null>(null)
+    const [price, setPrice] = useState<number | null>(null)
+
+    useEffect(()=>{
+        if (params?.name && typeof params?.name === "string") {
+            setName(params.name)
+        } else {
+            setName(null)
+        }
+        if (params?.upiid && typeof params?.upiid === "string") {
+            setUpiid(params.upiid)
+        } else {
+            setUpiid(null)
+        }
+        if (params?.price && typeof params?.price === "string") {
+            setPrice(parseInt(params.price))
+        } else {
+            setPrice(null)
+        }
+        console.log("PRICE", params)
+    }, [params])
 
     const [pin, setPin] = useState<null[] | number[]>([null, null, null, null, null, null])
 
@@ -59,12 +85,16 @@ function UPI() {
                     fontWeight: "700", 
                     color: "white",
                     fontSize: 16,
-                }}>Shubham Singh</Text>
+                }}>
+                    {name?name:"Paytm Merchant"}
+                </Text>
                 <Text style={{
                     fontWeight: "700", 
                     color: "white",
                     fontSize: 16,
-                }}>₹ 1.00</Text>
+                }}>
+                    ₹ {price?price.toFixed(2):"0.00"}
+                </Text>
             </View>
             <Entypo name="chevron-small-down" size={24} color="white" style={{marginTop: 5, alignSelf: "flex-end", paddingHorizontal: 15}} />
         </View>
@@ -146,7 +176,7 @@ function UPI() {
                     fontWeight: "600",
                     textAlign: "center",
                 }}>
-                    You are transferring money from your account to Shubham Singh
+                    You are transferring money from your account to {name?name:"Paytm Merchant"}
                 </Text>
             </View>
         </View>
@@ -159,7 +189,29 @@ function UPI() {
 
 const UPIKeyboard = ({pin, setPin}: any) => {
 
-    // const [pin, setPin] = useState<null[] | number[]>([null, null, null, null, null, null])
+    const params = useLocalSearchParams()
+
+    const [name, setName] = useState<string | null>(null)
+    const [upiid, setUpiid] = useState<string | null>(null)
+    const [price, setPrice] = useState<number | null>(null)
+
+    useEffect(()=>{
+        if (params?.name && typeof params?.name === "string") {
+            setName(params.name)
+        } else {
+            setName(null)
+        }
+        if (params?.upiid && typeof params?.upiid === "string") {
+            setUpiid(params.upiid)
+        } else {
+            setUpiid(null)
+        }
+        if (params?.price && typeof params?.price === "string") {
+            setPrice(parseInt(params.price))
+        } else {
+            setPrice(null)
+        }
+    }, [params])
 
     return (
         <FlatList
@@ -214,7 +266,15 @@ const UPIKeyboard = ({pin, setPin}: any) => {
                                 return temp
                             })
                         } else if (item.title=="OK") {
-                            console.log("OK")
+                            router?.push({
+                                pathname: "Paid",
+                                params: {
+                                    name: name,
+                                    upiid: upiid,
+                                    price: price,
+                                    pin: pin.join("")
+                                }
+                            })
                         }
                     }}>
                         <Text style={{

@@ -167,10 +167,10 @@ const CameraSection = () => {
         onBarCodeScanned={(res: any)=>{
           // console.log(res?.data)
           const name = res?.data?.split("&")[1]?.split("=")[1]?.replaceAll("%20", " ")?.replaceAll("  ", " ")
-          const phone = res?.data?.split("&")[0]?.split("=")[1]?.split("@")[0]
+          const upiid = res?.data?.split("?")[1]?.split("=")[1].split("&")[0]
           ToastAndroid.show(name, ToastAndroid.SHORT)
-          // upi://pay?pa=9354992488@upi&pn=SHUBHAM%20%20SINGH&cu=INR&mode=02&purpose=00&orgid=189999&sign=MEQCIFkMIB8V5LA0xfHciNXXpUdOSwCEcq31gp7KouBEHWVvAiBj18jJOcdCQBXWtR0bsuzF1Fh2eKjcbv9gJ91iPIDiLw==
-          console.log(name, phone)
+          console.log(name, upiid)
+          router?.push({pathname: "Pay", params: {name, upiid}})
         }}
       />
     </View>
